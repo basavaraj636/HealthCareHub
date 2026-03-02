@@ -4,39 +4,44 @@ import jakarta.persistence.*;
 import lombok.*;
 import nimblix.in.HealthCareHub.utility.HealthCareUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "medicines")
+@Table(name = "hospitals")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Medicine {
+public class Hospital {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String medicineName;
+    private String name;
 
-    private String manufacturer;
+    private String address;
 
-    private String description;
+    private String city;
 
-    private String dosage; // e.g., 500mg, 10ml
+    private String state;
 
-    private Double price;
+    private String phone;
 
-    private Integer stockQuantity;
+    private String email;
 
-    @Column(name = "is_active")
-    private String isActive; // ACTIVE / INACTIVE
+    private Integer totalBeds;
 
-    // Optional: If medicine belongs to a hospital (pharmacy inside hospital)
-    @ManyToOne
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital;
+    @ElementCollection
+    @CollectionTable(
+            name = "hospital_rooms",
+            joinColumns = @JoinColumn(name = "hospital_id")
+    )
+
+    private List<Room> rooms = new ArrayList<>();
+
 
     @Column(name = "created_time", updatable = false)
     private String createdTime;
@@ -54,4 +59,21 @@ public class Medicine {
     protected void onUpdate() {
         updatedTime = HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
     }
+
+    @Embeddable
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Room {
+
+        private String roomNumber;
+        private String roomType;
+        private boolean available;
+
+    }
 }
+
+
+

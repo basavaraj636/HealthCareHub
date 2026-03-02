@@ -3,32 +3,30 @@ package nimblix.in.HealthCareHub.model;
 import jakarta.persistence.*;
 import lombok.*;
 import nimblix.in.HealthCareHub.utility.HealthCareUtil;
+
 @Entity
-@Table(name = "patients")
+@Table(name = "appointments")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Patient {
+public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private Integer age;
-    private String gender;
-    private String phone;
-    private String disease;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital;
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    private String appointmentDateTime;
+    private String status; // BOOKED, CANCELLED, COMPLETED
 
     private String createdTime;
     private String updatedTime;

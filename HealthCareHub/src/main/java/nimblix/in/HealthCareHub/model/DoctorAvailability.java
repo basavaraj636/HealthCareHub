@@ -4,31 +4,26 @@ import jakarta.persistence.*;
 import lombok.*;
 import nimblix.in.HealthCareHub.utility.HealthCareUtil;
 @Entity
-@Table(name = "patients")
+@Table(name = "doctor_availability")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Patient {
+public class DoctorAvailability {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private Integer age;
-    private String gender;
-    private String phone;
-    private String disease;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @ManyToOne
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital;
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    private String availableDate;
+    private String startTime;
+    private String endTime;
+    private boolean isAvailable;
 
     private String createdTime;
     private String updatedTime;
