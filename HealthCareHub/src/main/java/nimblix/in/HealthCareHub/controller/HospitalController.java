@@ -1,9 +1,11 @@
 package nimblix.in.HealthCareHub.controller;
 
 import lombok.RequiredArgsConstructor;
+import nimblix.in.HealthCareHub.model.Hospital;
 import nimblix.in.HealthCareHub.request.HospitalRegistrationRequest;
 import nimblix.in.HealthCareHub.response.RoomResponse;
 import nimblix.in.HealthCareHub.service.HospitalService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
