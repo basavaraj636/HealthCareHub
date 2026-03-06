@@ -3,6 +3,7 @@ package nimblix.in.HealthCareHub.controller;
 import lombok.RequiredArgsConstructor;
 import nimblix.in.HealthCareHub.model.Hospital;
 import nimblix.in.HealthCareHub.request.HospitalRegistrationRequest;
+import nimblix.in.HealthCareHub.request.MedicineAddRequest;
 import nimblix.in.HealthCareHub.response.RoomResponse;
 import nimblix.in.HealthCareHub.service.HospitalService;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,21 @@ public class HospitalController {
             @RequestBody HospitalRegistrationRequest request) {
 
         return hospitalService.registerHospital(request);
+    }
+
+    @PostMapping("/medicine/add")
+    public String addMedicine(@RequestBody MedicineAddRequest request){
+
+        if (request == null) {
+            throw new IllegalArgumentException("Request body cannot be null");
+        }
+        if (request.getHospitalId() == null) {
+            throw new IllegalArgumentException("Hospital Id is required");
+        }
+        if (request.getMedicineName()==null || request.getMedicineName().trim().isEmpty()){
+            throw new IllegalArgumentException("medicine name is required");
+        }
+        return hospitalService.addMedicine(request);
     }
 
     @PostMapping("/{hospitalId}/rooms")
